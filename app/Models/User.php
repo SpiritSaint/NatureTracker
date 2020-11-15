@@ -13,6 +13,27 @@ class User extends Authenticatable
     use HasFactory, Notifiable, Uuid;
 
     /**
+     * The model primary key name.
+     *
+     * @var string
+     */
+    protected $primaryKey = "id";
+
+    /**
+     * The model has incrementing primary key.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
+     * The model key type.
+     *
+     * @var string
+     */
+    public $keyType = "string";
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -43,27 +64,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The model primary key name.
-     *
-     * @var string
-     */
-    protected $primaryKey = "id";
-
-    /**
-     * The model has incrementing primary key.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The model key type.
-     *
-     * @var string
-     */
-    public $keyType = "string";
-
-    /**
      * The user has many devices.
      *
      * @return HasMany
@@ -71,15 +71,5 @@ class User extends Authenticatable
     public function devices()
     {
         return $this->hasMany(Device::class, "user_id", "id");
-    }
-
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return "id";
     }
 }

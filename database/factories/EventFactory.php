@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Device;
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
-class DeviceFactory extends Factory
+class EventFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Device::class;
+    protected $model = Event::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +22,9 @@ class DeviceFactory extends Factory
     public function definition()
     {
         return [
-            "name" => $this->faker->name,
+            "data" => [
+                "temperature" => 11,
+            ],
         ];
     }
 }

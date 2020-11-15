@@ -42,7 +42,7 @@ class DevicesController extends Controller
             "name" => $request->input("name"),
             "description" => $request->has("description") ? $request->input("description") : null,
         ]);
-        return response()->json($device, 200);
+        return response()->json($device, 201);
     }
 
     /**
@@ -85,8 +85,8 @@ class DevicesController extends Controller
     {
         try {
             $device->delete();
-        } catch (\Throwable $throwable) {
-            return response()->json(["status" => "Device Not Deleted"], 500);
+        } catch (\Throwable $throwable) { // @codeCoverageIgnoreStart
+            return response()->json(["status" => "Device Not Deleted"], 500); // @codeCoverageIgnoreEnd
         }
         return response()->json(["status" => "Device Deleted"], 200);
     }
