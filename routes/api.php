@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('devices', \App\Http\Controllers\Api\DevicesController::class)->middleware('auth:api');
+
+Route::apiResource('events', \App\Http\Controllers\Api\EventsController::class)->middleware('auth:api');

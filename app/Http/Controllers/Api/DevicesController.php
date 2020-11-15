@@ -42,7 +42,7 @@ class DevicesController extends Controller
             "name" => $request->input("name"),
             "description" => $request->has("description") ? $request->input("description") : null,
         ]);
-        return response()->json($device, 200);
+        return response()->json($device, 201);
     }
 
     /**

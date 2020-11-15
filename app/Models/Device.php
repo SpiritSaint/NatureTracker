@@ -12,17 +12,6 @@ class Device extends Model
     use HasFactory, Uuid;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        "user_id",
-        "name",
-        "description",
-    ];
-
-    /**
      * The model primary key name.
      *
      * @var string
@@ -44,14 +33,15 @@ class Device extends Model
     public $keyType = "string";
 
     /**
-     * The device has many events.
+     * The attributes that are mass assignable.
      *
-     * @return HasMany
+     * @var array
      */
-    public function events()
-    {
-        return $this->hasMany(Event::class, "device_id", "id");
-    }
+    protected $fillable = [
+        "user_id",
+        "name",
+        "description",
+    ];
 
     /**
      * Get the route key for the model.
@@ -61,5 +51,15 @@ class Device extends Model
     public function getRouteKeyName()
     {
         return "id";
+    }
+
+    /**
+     * The device has many events.
+     *
+     * @return HasMany
+     */
+    public function events()
+    {
+        return $this->hasMany(Event::class, "device_id", "id");
     }
 }

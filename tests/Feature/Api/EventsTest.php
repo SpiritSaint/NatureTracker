@@ -3,11 +3,13 @@
 namespace Tests\Feature\Api;
 
 use App\Models\Device;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class DevicesTest extends TestCase
+class EventsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -22,11 +24,15 @@ class DevicesTest extends TestCase
             "name" => Device::factory()->make()->name,
         ]);
 
-        $response = $this->actingAs($user, 'api')->json('GET', '/api/devices');
+        $event = $device->events()->create([
+            "data" => Event::factory()->make()->data,
+        ]);
+
+        $response = $this->actingAs($user, 'api')->json('GET', '/api/events');
 
         $response->assertStatus(200)
             ->assertJsonFragment([
-                "name" => $device->name,
+                "data" => $event->data,
             ]);
     }
 
@@ -37,15 +43,20 @@ class DevicesTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $device = Device::factory()->make();
+        $device = $user->devices()->create([
+            "name" => Device::factory()->make()->name,
+        ]);
 
-        $response = $this->actingAs($user, "api")->json("POST", "/api/devices", [
-            "name" => $device->name,
+        $response = $this->actingAs($user, "api")->json("POST", "/api/events", [
+            "device_id" => $device->id,
+            "data" => [
+                "temperature" => 7
+            ]
         ]);
 
         $response->assertStatus(201)
             ->assertJsonFragment([
-                "name" => $device->name,
+                "device_id" => $device->id,
             ]);
     }
 
@@ -60,11 +71,15 @@ class DevicesTest extends TestCase
             "name" => Device::factory()->make()->name,
         ]);
 
-        $response = $this->actingAs($user, "api")->json("GET", "/api/devices/" . $device->id);
+        $event = $device->events()->create([
+            "data" => Event::factory()->make()->data,
+        ]);
+
+        $response = $this->actingAs($user, "api")->json("GET", "/api/events/" . $event->id);
 
         $response->assertStatus(200)
             ->assertJsonFragment([
-                "name" => $device->name,
+                "data" => $event->data,
             ]);
     }
 
@@ -79,15 +94,23 @@ class DevicesTest extends TestCase
             "name" => Device::factory()->make()->name,
         ]);
 
-        $newName = "SuperRandomName";
+        $event = $device->events()->create([
+            "data" => Event::factory()->make()->data,
+        ]);
 
-        $response = $this->actingAs($user, "api")->json("PUT", "/api/devices/" . $device->id, [
-            "name" => $newName
+        $newTemperature = 17;
+
+        $response = $this->actingAs($user, "api")->json("PUT", "/api/events/" . $event->id, [
+            "data" => [
+                "temperature" => $newTemperature
+            ]
         ]);
 
         $response->assertStatus(200)
             ->assertJsonFragment([
-                "name" => $newName,
+                "data" => [
+                    "temperature" => $newTemperature
+                ]
             ]);
     }
 
@@ -102,7 +125,11 @@ class DevicesTest extends TestCase
             "name" => Device::factory()->make()->name,
         ]);
 
-        $response = $this->actingAs($user, "api")->json("DELETE", "/api/devices/" . $device->id);
+        $event = $device->events()->create([
+            "data" => Event::factory()->make()->data,
+        ]);
+
+        $response = $this->actingAs($user, "api")->json("DELETE", "/api/events/" . $event->id);
 
         $response->assertStatus(200);
     }
