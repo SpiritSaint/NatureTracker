@@ -1,4 +1,4 @@
-## WeatherTracker
+## NatureTracker
 
 ### Badges
 
