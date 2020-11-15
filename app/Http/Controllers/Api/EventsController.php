@@ -23,6 +23,7 @@ class EventsController extends Controller
     public function index(IndexRequest $request)
     {
         $events = Event::query()
+            ->with('device')
             ->paginate(20);
 
         return response()->json($events, 200);
