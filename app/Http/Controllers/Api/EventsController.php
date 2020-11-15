@@ -10,6 +10,7 @@ use App\Http\Requests\Api\Events\StoreRequest;
 use App\Http\Requests\Api\Events\UpdateRequest;
 use App\Models\Event;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
@@ -51,6 +52,8 @@ class EventsController extends Controller
      */
     public function show(ShowRequest $request, Event $event)
     {
+        $event->load('device');
+
         return response()->json($event, 200);
     }
 
@@ -81,8 +84,8 @@ class EventsController extends Controller
     {
         try {
             $event->delete();
-        } catch (\Throwable $throwable) {
-            return response()->json(["status" => "Event Not Deleted"], 500);
+        } catch (\Throwable $throwable) { // @codeCoverageIgnoreStart
+            return response()->json(["status" => "Event Not Deleted"], 500); // @codeCoverageIgnoreEnd
         }
         return response()->json(["status" => "Event Deleted"], 200);
     }

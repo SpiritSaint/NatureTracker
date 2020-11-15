@@ -10,6 +10,7 @@ use App\Http\Requests\Api\Devices\StoreRequest;
 use App\Http\Requests\Api\Devices\UpdateRequest;
 use App\Models\Device;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class DevicesController extends Controller
 {
@@ -84,8 +85,8 @@ class DevicesController extends Controller
     {
         try {
             $device->delete();
-        } catch (\Throwable $throwable) {
-            return response()->json(["status" => "Device Not Deleted"], 500);
+        } catch (\Throwable $throwable) { // @codeCoverageIgnoreStart
+            return response()->json(["status" => "Device Not Deleted"], 500); // @codeCoverageIgnoreEnd
         }
         return response()->json(["status" => "Device Deleted"], 200);
     }
