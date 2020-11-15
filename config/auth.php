@@ -46,6 +46,12 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'devices' => [
+            'driver' => 'token',
+            'provider' => 'devices',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -71,10 +77,10 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'devices' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Device::class,
+        ],
     ],
 
     /*
