@@ -10,7 +10,6 @@ use App\Http\Requests\Api\Devices\StoreRequest;
 use App\Http\Requests\Api\Devices\UpdateRequest;
 use App\Models\Device;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class DevicesController extends Controller
 {

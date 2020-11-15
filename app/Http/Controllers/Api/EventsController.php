@@ -10,7 +10,6 @@ use App\Http\Requests\Api\Events\StoreRequest;
 use App\Http\Requests\Api\Events\UpdateRequest;
 use App\Models\Event;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
