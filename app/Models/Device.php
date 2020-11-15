@@ -4,13 +4,12 @@ namespace App\Models;
 
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Device extends Model
 {
-    use HasFactory, Notifiable, Uuid;
+    use HasFactory, Uuid;
 
     /**
      * The attributes that are mass assignable.
@@ -18,28 +17,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        "user_id",
         "name",
-        "email",
-        "password",
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        "password",
-        "remember_token",
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        "email_verified_at" => "datetime",
+        "description",
     ];
 
     /**
@@ -64,13 +44,13 @@ class User extends Authenticatable
     public $keyType = "string";
 
     /**
-     * The user has many devices.
+     * The device has many events.
      *
      * @return HasMany
      */
-    public function devices()
+    public function events()
     {
-        return $this->hasMany(Device::class, "user_id", "id");
+        return $this->hasMany(Event::class, "device_id", "id");
     }
 
     /**
